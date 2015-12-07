@@ -59,7 +59,7 @@ public class SceneViewManager : MonoBehaviour {
         mAppManager.DeInitManager();
     }
     
-    void OnGUI () 
+   /* void OnGUI () 
     {
         if (mErrorOccurred)
         {
@@ -69,7 +69,7 @@ public class SceneViewManager : MonoBehaviour {
         {
             mAppManager.Draw();
         }
-    }
+    }*/
 
     public void OnVuforiaInitializationError(VuforiaUnity.InitError initError)
     {
