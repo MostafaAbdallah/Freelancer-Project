@@ -33,6 +33,7 @@ public class ChooseShapeManager : MonoBehaviour {
 	private AudioSource soundSource;
 	private int correctAnswer = -1;
 	private Image sign;
+    private static bool click = false;
 	void Start () {
 		soundSource = gameObject.GetComponent<AudioSource> ();
 		correctAnswer = ChooseTheShape.Instance.initGame ();
@@ -44,31 +45,39 @@ public class ChooseShapeManager : MonoBehaviour {
 
 	private IEnumerator CheckAnswer(int buttonIndex){
 
-		Color c;
-		if (buttonIndex == correctAnswer) {
-			Debug.Log("You Right  brtton = " + buttonIndex + " correctAns = " + correctAnswer);
-			sign.sprite = signImages [0];
-			c = sign.color;
-			sign.color = new Color(c.r, c.g,c.b,255);
-			soundSource.clip = answerSound[0];
-			soundSource.Play();
-		}
-		else {
-			sign.sprite = signImages [1];
-			c = sign.color;
-			sign.color = new Color(c.r, c.g,c.b,255);
-			soundSource.clip = answerSound[1];
-			soundSource.Play();
-		}
+        if (click == false) {
+            click = true;
+            Color c;
+            if (buttonIndex == correctAnswer)
+            {
+                Debug.Log("You Right  brtton = " + buttonIndex + " correctAns = " + correctAnswer);
+                sign.sprite = signImages[0];
+                c = sign.color;
+                sign.color = new Color(c.r, c.g, c.b, 255);
+                soundSource.clip = answerSound[0];
+                soundSource.Play();
+            }
+            else
+            {
+                sign.sprite = signImages[1];
+                c = sign.color;
+                sign.color = new Color(c.r, c.g, c.b, 255);
+                soundSource.clip = answerSound[1];
+                soundSource.Play();
+            }
 
-		yield return new WaitForSeconds (2);
-		ChooseTheShape.Instance.ResetGame ();
-		correctAnswer = ChooseTheShape.Instance.initGame ();
-		ResetSignEffects ();
+            yield return new WaitForSeconds(2);
+            ChooseTheShape.Instance.ResetGame();
+            correctAnswer = ChooseTheShape.Instance.initGame();
+            ResetSignEffects();
+        }
+		
 	}
 
 	public void setSign(Image sign){
-		this.sign = sign;
+        if(click == false)
+		    this.sign = sign;
+
 	}
 
 	private void ResetSignEffects(){
@@ -77,6 +86,7 @@ public class ChooseShapeManager : MonoBehaviour {
 		sign.color = new Color(c.r, c.g,c.b,0);
 		sign.sprite = null;
 		soundSource.Stop ();
+        click = false;
 	}
 
 }
